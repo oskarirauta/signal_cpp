@@ -1,10 +1,8 @@
 #include <iostream>
 
 #include "common.hpp"
-//#include "constants.hpp"
 #include "logger.hpp"
 #include "signal.hpp"
-//#include "ubus.hpp"
 
 static bool running = true;
 
