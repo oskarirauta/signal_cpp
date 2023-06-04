@@ -1,4 +1,3 @@
-#include <csignal>
 #include "logger.hpp"
 #include "signal.hpp"
 
@@ -26,14 +25,19 @@ const bool Signal::register_handler(const die_handler_func die_handler, const st
 	sigemptyset(&ignore_action.sa_mask);
 	ignore_action.sa_flags = 0;
 
-	sigaction(SIGTERM, sig_actions.at(Signal::type::TERM) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGALRM, sig_actions.at(Signal::type::ALRM) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGHUP, sig_actions.at(Signal::type::HUP) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGINT, sig_actions.at(Signal::type::INT) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGPIPE, sig_actions.at(Signal::type::PIPE) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGQUIT, sig_actions.at(Signal::type::QUIT) ? &exit_action : &ignore_action, NULL);
-	sigaction(SIGUSR1, sig_actions.at(Signal::type::USR1) ? &exit_action : &ignore_action, NULL);
-	 sigaction(SIGUSR2, sig_actions.at(Signal::type::USR2) ? &exit_action : &ignore_action, NULL);
+	std::map<Signal::type, bool> new_actions(Signal::default_sig_actions);
+
+	for ( auto const& [key, val] : sig_actions)
+		new_actions[key] = val;
+
+	sigaction(SIGTERM, new_actions.at(Signal::type::TERM) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGALRM, new_actions.at(Signal::type::ALRM) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGHUP, new_actions.at(Signal::type::HUP) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGINT, new_actions.at(Signal::type::INT) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGPIPE, new_actions.at(Signal::type::PIPE) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGQUIT, new_actions.at(Signal::type::QUIT) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGUSR1, new_actions.at(Signal::type::USR1) ? &exit_action : &ignore_action, NULL);
+	sigaction(SIGUSR2, new_actions.at(Signal::type::USR2) ? &exit_action : &ignore_action, NULL);
 
 	return true;
 }
@@ -68,4 +72,20 @@ const bool Signal::unregister_handler(void) {
 const bool Signal::is_registered(void) {
 
 	return Signal::_private::sig_registered;
+}
+
+const std::string Signal::string(const int sig) {
+
+	switch (sig) {
+		case SIGTERM: return "SIGTERM";
+		case SIGALRM: return "SIGALRM";
+		case SIGHUP: return "SIGHUP";
+		case SIGINT: return "SIGINT";
+		case SIGPIPE: return "SIGPIPE";
+		case SIGQUIT: return "SIGQUIT";
+		case SIGUSR1: return "SIGUSR1";
+		case SIGUSR2: return "SIGUSR2";
+		default: return "(unsupported signal type)";
+	}
+
 }

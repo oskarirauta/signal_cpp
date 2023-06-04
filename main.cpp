@@ -8,7 +8,7 @@ static bool running = true;
 
 static void die_handler(int signum) {
 
-	logger::info << "die signal received" << std::endl;
+	logger::info << Signal::string(signum) << " signal received" << std::endl;
 	running = false;
 }
 
