@@ -14,11 +14,7 @@ static void die_handler(int signum) {
 
 int main(const int argc, const char **argv) {
 
-	logger::output_level[logger::type::info] = true;
-	logger::output_level[logger::type::error] = true;
-	logger::output_level[logger::type::verbose] = true;
-	logger::output_level[logger::type::vverbose] = true;
-	logger::output_level[logger::type::debug] = true;
+	logger::loglevel(logger::debug);
 
 	std::cout << "signal handler test" << std::endl;
 
