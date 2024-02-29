@@ -1,15 +1,16 @@
 #include <iostream>
+#include <atomic>
 
 #include "common.hpp"
 #include "logger.hpp"
 #include "signal.hpp"
 
-static bool running = true;
+std::atomic<bool> running(true);
 
 static void die_handler(int signum) {
 
 	logger::info << Signal::string(signum) << " signal received" << std::endl;
-	running = false;
+	running.store(false, std::memory_order_relaxed);
 }
 
 int main(const int argc, const char **argv) {
@@ -22,7 +23,7 @@ int main(const int argc, const char **argv) {
 
 	std::cout << "exit with CTRL-C" << std::endl;
 
-	while (running);
+	while (running.load(std::memory_order_relaxed));
 
 	logger::verbose << "program exits" << std::endl;
 
