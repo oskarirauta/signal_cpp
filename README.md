@@ -1,14 +1,14 @@
-[![C++ CI build](https://github.com/oskarirauta/signal_cpp/actions/workflows/build.yml/badge.svg)](https://github.com/oskarirauta/signal_cpp/actions/workflows/build.yml)
+[![License:MIT](https://img.shields.io/badge/License-MIT-blue?style=plastic)](LICENSE)
+[![C++ CI build](../../actions/workflows/build.yml/badge.svg)](../../actions/workflows/build.yml)
+### signal_cpp
 
-# signal_cpp
 c++ module for signal handling
 
-# depencies
+## <sub>Depencies</sub>
+
  - [common_cpp](https://github.com/oskarirauta/common_cpp.git)
  - [logger_cpp](https://github.com/oskarirauta/logger_cpp.git)
 
-# example
-Check main.cpp (example) for usage.. Very simple.
+## <sub>Example</sub>
 
-### License
-MIT
+Sample code is provided, check main.cpp for usage, this module is super simple.

@@ -1,6 +1,6 @@
 all: world
 CXX?=g++
-CXXFLAGS?=--std=c++20 -Wall -fPIC -g
+CXXFLAGS?=--std=c++17 -Wall -fPIC -g
 LDFLAGS?=-L/lib -L/usr/lib
 
 INCLUDES+= -I./include
