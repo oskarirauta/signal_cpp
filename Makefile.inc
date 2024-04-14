@@ -1,5 +1,4 @@
-SIGNAL_DIR?=signal
-
+SIGNAL_DIR?=./signal
 INCLUDES += -I./$(SIGNAL_DIR)/include
 
 SIGNAL_OBJS:= \
